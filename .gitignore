@@ -1,0 +1,21 @@
+# Never commit credentials. The client reads PE_API_KEY from the environment.
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node (not used here, but keeps stray tooling out)
+node_modules/
+
+# OS
+.DS_Store

@@ -1,0 +1,204 @@
+Captured 2026-09-15 on macOS 14 (Darwin 24.6.0), Python 3.9.6, no third-party packages.
+Times in the grid are the reader's local clock (AEST here); the feed itself is UTC.
+
+############################################################################
+# 1. KEYLESS DEMO  --  $ python3 quickstart.py
+############################################################################
+
+mode: DEMO (no PE_API_KEY set) -- keyless sandbox, 0 credits,
+      3 races / 5 runners / best 3 prices, rate limited to 30 req/min per IP.
+      Free key unlocks the full feed: https://puntersedge.online/api?utm_source=australian-racing-api-python&utm_medium=code
+
+Angle Park R1  11:38 AEST  +137 min (greyhound, AU)
+---------------------------------------------------
+#   runner              TAB   PBET   SPBT   NEDS    UNI   LADB   BDLX   BETR    best
+1   Alia Rose        14.00* 14.00*  13.00      -      -      -      -      -   14.00
+2   Sandy Knuckles    4.80*      -   4.60   4.60      -      -      -      -    4.80
+4   Adhana Remi           -      -      -      -  3.00*  3.00*  3.00*      -    3.00
+5   Whiplash Emmett       - 26.00* 26.00* 26.00*      -      -      -      -   26.00
+7   Twitching         2.25*      -      -      -      -      -  2.25*  2.25*    2.25
+
+Hobart R1  11:45 AEST  +144 min (greyhound, AU)
+-----------------------------------------------
+#   runner              TAB   LADB   NEDS   BDLX   TTCH    UNI   PBET   PALM   SPBT    best
+1   Juneau Quadrant   6.00*   5.50   5.50      -      -      -      -      -      -    6.00
+2   Miss Bern             -  5.00*  5.00*  5.00*      -      -      -      -      -    5.00
+3   Miss Sue Lee          - 12.00* 12.00*      - 12.00*      -      -      -      -   12.00
+4   Listen Spider         -      -      -      -      -  5.00*  5.00*  5.00*      -    5.00
+5   Jamella Storm         -      -      -      -      -  4.40*  4.40*      -  4.40*    4.40
+
+Angle Park R2  11:55 AEST  +154 min (greyhound, AU)
+---------------------------------------------------
+#   runner            SPBT    UNI    TAB   PBET   NEDS    best
+1   Canya Jump       2.40*  2.40*  2.40*      -      -    2.40
+4   Blue Energy          -   3.60  4.00*   3.60      -    4.00
+5   Velaris          3.70*      -  3.70*  3.70*      -    3.70
+7   Adhana Phillip       -      - 26.00* 26.00* 26.00*   26.00
+8   King Fearless    3.70*      -  3.70*      -   3.60    3.70
+
+3 race(s). Demo responses carry no X-Credits-* headers -- they cost 0.
+
+
+############################################################################
+# 2. WITH A KEY    --  $ export PE_API_KEY=...  &&  python3 quickstart.py --races 2 --category horse
+############################################################################
+
+mode: KEYED -- live feed, all quoting bookmakers
+
+MORUYA R1  13:25 AEST  +244 min (horse, AU)
+-------------------------------------------
+#   runner             NEDS    UNI   PBET   BGLD   TTCH   SPBT   BRGT   BOST    TAB   PALM   LADB   BETR    best
+1   Colorado Sun      3.50*   3.30  3.50*   3.20  3.50*  3.50*  3.50*   3.20   3.40  3.50*  3.50*  3.50*    3.50
+2   Mr Reiby          7.50*   6.00  7.50*   6.50  7.50*  7.50*  7.50*   6.50  7.50*  7.50*  7.50*  7.50*    7.50
+3   Nothing Special   11.00   9.00  11.00  10.00  11.00  11.00  11.00  10.00 12.00*  11.00  11.00  11.00   12.00
+4   Waves Of Wisdom    4.00   3.90   4.00   3.80   4.00  4.20*   3.70   3.80   4.00   4.00   4.00   4.00    4.20
+5   Zippy Lion        5.50*   4.60  5.50*   4.80  5.50*  5.50*  5.50*   4.80  5.50*  5.50*  5.50*  5.50*    5.50
+6   Better Bloom       4.80   4.20   4.80   4.60  5.00*   4.80   4.80   4.60  5.00*   4.80   4.80  5.00*    5.00
+7   Frosted Amour     26.00  21.00  29.00  26.00  26.00  27.00  26.00  26.00 31.00*  26.00  26.00  26.00   31.00
+8   Reveillon          9.50   8.50 10.00*   9.00 10.00* 10.00*   9.50   9.00 10.00*   9.50   9.50 10.00*   10.00
+  oldest price 1809s old | stale: palmerbet
+
+BOWEN R1  13:33 AEST  +252 min (horse, AU)
+------------------------------------------
+#   runner           TTCH   LADB    TAB   BGLD   NEDS    UNI   BOST   PALM   BRGT   PBET   SPBT   BETR    best
+1   Touch Base       3.20  3.60*   3.20   3.00  3.60*   3.30   3.00   3.50   3.30   3.40   3.30   3.20    3.60
+3   The House        7.50   7.50   7.00   6.00   7.50   7.50   6.00   7.50  8.00*   7.50   7.50   7.50    8.00
+4   Missile Baby     2.35   2.15   2.40   2.25   2.15   2.30   2.25   2.20  2.45*   2.30   2.30   2.40    2.45
+5   Formal Affair    3.20   3.20   3.10   3.00   3.20   3.20   3.00   3.20   3.20   3.20  3.30*   3.10    3.30
+7   Exo Miss        81.00  81.00  81.00  71.00  81.00  61.00  71.00  71.00101.00*  91.00  91.00  81.00  101.00
+8   Reves Time     16.00*  14.00  15.00  14.00  14.00  15.00  14.00  14.00  15.00  15.00  15.00  14.00   16.00
+  oldest price 626s old | scratched: Octopolis (6), Sailing Solo (2)
+
+2 race(s). X-Credits-Cost: 2  X-Credits-Remaining: unlimited
+('unlimited' means this key has no monthly cap. A free-tier key reports
+ the integer left of its 1,500 credits/month here.)
+
+
+############################################################################
+# 3. EVERY METHOD  --  $ python3 tour.py     (~18 credits)
+############################################################################
+
+========================================================================
+next_to_go(country='AU')  -- 2 credits
+========================================================================
+  Angle Park       R1  greyhound  2026-09-15T01:38:00Z  10 books
+  Hobart           R1  greyhound  2026-09-15T01:45:00Z  10 books
+  Angle Park       R2  greyhound  2026-09-15T01:55:00Z  10 books
+  [cost 2, remaining unlimited]
+
+========================================================================
+next_to_go(country=None)  -- the filter matters
+========================================================================
+  CA  Woodbine Mohawk Park R3  2026-09-14T23:22:00Z
+  US  Mountaineer Park     R2  2026-09-14T23:25:00Z
+  US  Louisiana Downs      R6  2026-09-14T23:27:00Z
+  US  Mountaineer Park     R3  2026-09-14T23:50:00Z
+  US  Mountaineer Park     R4  2026-09-15T00:15:00Z
+  US  Mountaineer Park     R5  2026-09-15T00:40:00Z
+  -> 0 of these 6 races are Australian
+  [cost 2, remaining unlimited]
+
+========================================================================
+events(country='AU')  -- 1 credit, no prices
+========================================================================
+  13 races in the next 4h
+    Angle Park       R1  greyhound  2026-09-15T01:38:00Z
+    Hobart           R1  greyhound  2026-09-15T01:45:00Z
+    Angle Park       R2  greyhound  2026-09-15T01:55:00Z
+    HOBART           R2  greyhound  2026-09-15T02:02:00Z
+  [cost 1, remaining unlimited]
+
+========================================================================
+venues()  -- 1 credit, the join table
+========================================================================
+  189 venues: AU=156, NZ=25, GB=3, US=2, BR=1, AR=1, CA=1
+  19 venues emit more than one spelling, e.g.
+    ALBION PARK          spellings=['ALBION PARK', 'Albion Park']
+    Angle Park           spellings=['ANGLE PARK', 'Angle Park']
+    Bowen                spellings=['BOWEN', 'Bowen']
+  11 venues have venue_site != venue_id, e.g.
+    Cambridge Synthetic      venue_id=cambridge-synthetic      venue_site=cambridge
+    Devonport Synthetic      venue_id=devonport-synthetic      venue_site=devonport
+    Gold Coast Poly          venue_id=gold-coast-poly          venue_site=gold-coast
+    Murray Bridge Straight   venue_id=murray-bridge-straight   venue_site=murray-bridge
+  [cost 1, remaining unlimited]
+
+========================================================================
+results(country='AU')  -- 2 credits
+========================================================================
+  179 settled AU races in the last 24h: greyhound=123, harness=34, horse=22
+  6 of them have race_id=null (join on venue_site + race_number + date)
+    Q Straight       R14  won by Blocker Tiger        @ 1.33
+    Sandown Park     R11  won by Pepper Pie           @ 4.0
+  [cost 2, remaining unlimited]
+
+========================================================================
+best_odds(country='AU')  -- 3 credits
+========================================================================
+  Angle Park       R1   market 129.6% across 10 books
+     Twitching              2.25   at betdeluxe    (10 books, spread 4.65%)
+     Adhana Remi            3.0    at palmerbet    (10 books, spread 3.45%)
+     Sandy Knuckles         4.8    at tab          (10 books, spread 14.29%)
+  Hobart           R1   market 133.8% across 10 books
+     Jamella Storm          4.4    at pointsbetau  (10 books, spread 4.76%)
+     Miss Bern              5.0    at neds         (10 books, spread 0.0%)
+     Listen Spider          5.0    at sportsbet    (10 books, spread 0.0%)
+  [cost 3, remaining unlimited]
+
+========================================================================
+movers(country='AU', direction='firming')  -- 3 credits
+========================================================================
+  0 rows. Normal before a card opens -- no consensus has formed yet.
+  [cost 3, remaining unlimited]
+
+========================================================================
+price_history(...)  -- 5 credits, the free-tier closing line
+========================================================================
+  SANDOWN PARK R11 on 2026-09-14  (100 points returned, truncated=True)
+  results spelled this venue 'Sandown Park', price_history spelled it 'SANDOWN PARK'.
+  Join on venue_id ('sandown-park') / venue_site ('sandown'), never on the label.
+    Devil's Sympathy
+      betdeluxe    open 1.95   close 2.0    move   +2.6%  (2 pts)
+      betgold      open 1.9    close 1.85   move   -2.6%  (9 pts)
+      betr_au      open 1.95   close 1.8    move   -7.7%  (5 pts)
+      betright     open 2.05   close 1.8    move  -12.2%  (4 pts)
+    Viking Ruler
+      betdeluxe    open 2.4    close 2.4    move   +0.0%  (1 pts)
+      betgold      open 2.3    close 2.9    move  +26.1%  (10 pts)
+      betr_au      open 2.4    close 3.0    move  +25.0%  (9 pts)
+      betright     open 2.4    close 2.8    move  +16.7%  (4 pts)
+  [cost 5, remaining unlimited]
+  and a results row with race_id=null has no history under any
+  spelling -- 'Q Straight' (venue_id='q-straight', venue_site='the-q'):
+    venue='Q Straight'   -> 404
+    venue='the-q'        -> 404
+
+========================================================================
+horse_form(...)  -- 3 credits, and a name is not a key
+========================================================================
+  ambiguous=True, 2 candidates share that name:
+    ra:MTkxNzc4MzI5MjY     last seen 2026-09-14 via acceptances
+    ra:MTM0ODUyNDY2MTA     last seen 2026-08-31 via results
+  re-calling with runner_ref=ra:MTkxNzc4MzI5MjY
+  Lord Of Valor -- 5yo Bay Gelding, by EPAULETTE out of ILOVETHISLADY, trained by Donna Scott
+  career 7 starts, 3 wins, 1 seconds, $50975 prizemoney
+    2026-09-14  COR   R7   1st of 10  1300m Good  jockey Ella Bent  SP 7.5
+    2026-08-31  COR   R4   4th of 8  1000m Soft  jockey Blaike McDougall  SP 8.5
+    2026-08-18  ALB   R4   1st of 8  1175m Heavy  jockey Blaike McDougall  SP 6.0
+  [cost 3, remaining unlimited]
+
+========================================================================
+errors are RFC 9457 problem+json
+========================================================================
+  status : 404
+  type   : https://puntersedge.online/errors/not-found
+  detail : No price history for race_id '00000000-0000-0000-0000-000000000000'.
+
+========================================================================
+guard rails that cost you nothing (no request is sent)
+========================================================================
+  movers(direction="steam")          -> ValueError: direction must be 'firming' or 'drifting', got 'steam'
+  price_history(venue only)          -> ValueError: pass race_id, or all three of venue + race_number + date
+  max_points=10                      -> ValueError: max_points has a minimum of 100 (got 10)
+
+done. final credit state: Credits(cost=None, used=None, remaining=None, limit=None)
