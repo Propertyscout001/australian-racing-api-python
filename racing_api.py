@@ -50,7 +50,8 @@ SIGNUP_URL = (
 )
 
 # The 14 Australian bookmakers served by the feed, measured 2026-09-15.
-# Live coverage report: https://puntersedge.online/coverage-report
+# All 14 appeared in a 200-race unfiltered pull at 2026-09-14T23:39Z.
+# Live coverage report: https://puntersedge.online/coverage-report?utm_source=australian-racing-api-python&utm_medium=code
 # Betfair and Pinnacle are NOT in the feed -- there is no exchange price here.
 BOOKMAKERS = (
     "tab", "tabtouch", "betdeluxe", "betr_au", "pointsbetau", "betright",
@@ -151,14 +152,14 @@ class RacingAPI:
     """Client for the PuntersEdge Australian racing endpoints.
 
     One HTTPS connection is opened and reused for the life of the instance.
-    Measured on this machine 2026-09-15: a fresh TLS handshake per call ran a
-    median of 191.4 ms against /v1/racing/venues, the same call on a reused
-    connection ran 74.6 ms (n=5 each). Reuse the client; don't build one per
-    request.
+    Measured on this machine at 2026-09-14T23:45Z: a fresh client, and so a
+    fresh TLS handshake, per call ran a median of 220.3 ms against
+    /v1/racing/venues; the same call on a reused connection ran 77.6 ms
+    (n=5 each). Reuse the client; don't build one per request.
 
     Responses are requested gzipped. The same /v1/racing/next-to-go?country=AU
-    &num_races=50 payload measured 1,285,799 bytes uncompressed and 105,768
-    bytes gzipped -- 12.2x, on 2026-09-15.
+    &num_races=50 payload measured 1,376,121 bytes with Accept-Encoding:
+    identity and 115,220 bytes with gzip -- 11.9x, same timestamp.
     """
 
     def __init__(
@@ -211,9 +212,11 @@ class RacingAPI:
         raw, status, resp_headers = self._request(url, headers)
         body = _decode(raw, resp_headers.get("content-encoding"))
 
-        # Header names are case-insensitive per RFC 9110 and this API sends
-        # them lowercased over HTTP/2 and title-cased over HTTP/1.1, so look
-        # them up lowercased or you silently read None off every response.
+        # Header names are case-insensitive per RFC 9110, but http.client
+        # hands you the verbatim wire casing. This API sends them lowercase:
+        # measured 2026-09-14T23:47Z, `x-credits-remaining` over both HTTP/1.1
+        # and HTTP/2. Index the title-cased name and you silently read None
+        # off every response -- which the first version of this client did.
         self.last_credits = Credits(
             cost=_maybe_int(resp_headers.get("x-credits-cost")),
             used=_maybe_int(resp_headers.get("x-credits-used")),
@@ -267,14 +270,17 @@ class RacingAPI:
         Costs 2 credits keyed, 0 in demo mode.
 
         country defaults to "AU" on purpose. The endpoint is NOT Australia-only.
-        Measured 2026-09-15 on an unfiltered pull of 200 races: 191 AU, 7 US,
-        1 AR, 1 BR -- and the nine races closest to jumping at that moment were
-        Argentinian, Brazilian and American. Drop the filter and your
-        "Australian racing" screen shows Palermo and Mountaineer Park.
+        Measured at 2026-09-14T23:39Z (09:39 AEST on 2026-09-15) on an
+        unfiltered pull of 200 races: 194 AU, 5 US, 1 CA. The list is sorted by
+        time to jump, and the FIVE races nearest to jumping were the American
+        and Canadian ones -- none Australian. Drop the filter and your
+        "Australian racing" screen opens on Mountaineer Park (US) and
+        Assiniboia Downs (CA).
 
         Returns a list either way. In demo mode this unwraps the sandbox
-        envelope {"demo":..,"note":..,"shape":..,"races":[..]} so calling code
-        sees the same bare list the keyed endpoint returns.
+        envelope -- six top-level keys, {"demo":..,"note":..,"shape":..,
+        "cached":..,"signup_url":..,"races":[..]} -- so calling code sees the
+        same bare list the keyed endpoint returns.
         """
         if self.demo:
             payload = self._get("/demo/racing/next-to-go")
@@ -326,11 +332,16 @@ class RacingAPI:
         venue name. Each row carries venue_id, venue_canonical, venue_site and
         a `spellings` list of every string the upstream feeds actually emit.
 
-        Measured 2026-09-15 09:20 AEST: 188 venues (156 AU, 25 NZ, 3 GB, 2 US,
-        1 BR, 1 AR); 19 emitted more than one spelling; 11 had a venue_site
-        differing from their venue_id. Forty minutes later the same call
-        returned 189 -- a Canadian harness track had appeared. Call this
-        endpoint, don't hardcode its contents.
+        Measured at 2026-09-14T23:42Z (09:42 AEST on 2026-09-15): 187 venues
+        (156 AU, 25 NZ, 4 GB, 1 CA, 1 US); 20 emitted more than one spelling;
+        11 had a venue_site differing from their venue_id -- four of those
+        (q-straight, q1-lakeside, q1-lakeside-extra, q2-parklands) share the
+        single venue_site 'the-q'.
+
+        The row count is NOT stable. The same call returned 188 earlier the
+        same morning, 189 at 23:39Z and 187 three minutes after that, as
+        foreign meetings entered and left the window. Call this endpoint;
+        don't hardcode its contents.
         """
         if self.demo:
             raise NeedsKey("venues", "/v1/racing/venues")
@@ -352,9 +363,12 @@ class RacingAPI:
         limit maxes at 200; hours_back maxes at 168. `date` (YYYY-MM-DD, AET
         meeting date) is mutually exclusive with hours_back.
 
-        A result does not always carry the price feed's race_id: measured 2026-09-15 over 179 settled AU races in the last
-        24h, 6 had race_id null. Join on venue_site + race_number + date when
-        race_id is absent.
+        A result does not always carry the price feed's race_id. Measured at
+        2026-09-14T23:41Z over 179 settled AU races in the last 24h, 6 had
+        race_id null -- they were never matched into the price feed, and no
+        venue-name spelling conjures history for them. Join on venue_site +
+        race_number + date when race_id is absent, and treat a null race_id
+        as 'no price history' rather than as a bug in your join.
         """
         if self.demo:
             raise NeedsKey("results", "/v1/racing/results")
@@ -418,9 +432,9 @@ class RacingAPI:
         those spellings are a free 422, but they are still a wasted round trip.
 
         An empty list is normal, not a fault. Before a card opens there is no
-        consensus to move yet: on 2026-09-15 at 23:20 UTC (09:20 AEST) this
-        returned 0 rows at min_move_pct=10 for AU, for AU with
-        include_unresolved=true, and for every country.
+        consensus to move yet: at 2026-09-14 23:40 UTC (09:40 AEST on
+        2026-09-15) this returned 0 rows at min_move_pct=10 for AU, for AU
+        with include_unresolved=true, and for every country.
         """
         if direction is not None and direction not in ("firming", "drifting"):
             raise ValueError(
@@ -459,13 +473,15 @@ class RacingAPI:
         "truncated": true when it clipped.
 
         This is the free-tier way to get a closing price.
-        /v1/racing/closing-lines is plan-gated and 403s on the free tier;
-        close_price here is the same number without the gate.
+        /v1/racing/closing-lines is documented as plan-gated and is expected
+        to 403 below the required plan -- NOT verified by this client, which
+        was built with an unlimited key. close_price here is the same number
+        and is not plan-gated.
 
-        A race that has not been quoted yet 404s. Measured 2026-09-15, the
-        six AU races nearest to jumping all 404'd on price_history while
-        returning live prices from next_to_go -- history accrues from the
-        first capture, so a just-opened market has none.
+        A race that has not been quoted yet 404s. Measured at 2026-09-14
+        23:40Z, the six AU races nearest to jumping all 404'd on
+        price_history while returning live prices from next_to_go -- history
+        accrues from the first capture, so a just-opened market has none.
         """
         if self.demo:
             raise NeedsKey("price_history", "/v1/racing/price-history")

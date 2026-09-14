@@ -1,5 +1,7 @@
-Captured 2026-09-15 on macOS 14 (Darwin 24.6.0), Python 3.9.6, no third-party packages.
+Captured 2026-09-15 09:50  on macOS 14 (Darwin 24.6.0), Python 3.9.6, no third-party packages.
 Times in the grid are the reader's local clock (AEST here); the feed itself is UTC.
+Every block below is program output, pasted unedited. The ### banners are the only
+lines written by hand.
 
 ############################################################################
 # 1. KEYLESS DEMO  --  $ python3 quickstart.py
@@ -9,35 +11,34 @@ mode: DEMO (no PE_API_KEY set) -- keyless sandbox, 0 credits,
       3 races / 5 runners / best 3 prices, rate limited to 30 req/min per IP.
       Free key unlocks the full feed: https://puntersedge.online/api?utm_source=australian-racing-api-python&utm_medium=code
 
-Angle Park R1  11:38 AEST  +137 min (greyhound, AU)
+Angle Park R1  11:38 AEST  +107 min (greyhound, AU)
 ---------------------------------------------------
-#   runner              TAB   PBET   SPBT   NEDS    UNI   LADB   BDLX   BETR    best
-1   Alia Rose        14.00* 14.00*  13.00      -      -      -      -      -   14.00
-2   Sandy Knuckles    4.80*      -   4.60   4.60      -      -      -      -    4.80
-4   Adhana Remi           -      -      -      -  3.00*  3.00*  3.00*      -    3.00
-5   Whiplash Emmett       - 26.00* 26.00* 26.00*      -      -      -      -   26.00
-7   Twitching         2.25*      -      -      -      -      -  2.25*  2.25*    2.25
+#   runner             LADB   NEDS   PBET   SPBT   BRGT   PALM    UNI   BDLX    TAB    best
+1   Alia Rose        14.00* 14.00* 14.00*      -      -      -      -      -      -   14.00
+2   Sandy Knuckles    5.00*  5.00*      -  5.00*      -      -      -      -      -    5.00
+4   Adhana Remi           -      -      -      -  3.00*  3.00*   2.90      -      -    3.00
+5   Whiplash Emmett       -      - 29.00*      -      -  26.00      -  26.00      -   29.00
+7   Twitching          2.20      -      -      -  2.25*      -      -      -  2.25*    2.25
 
-Hobart R1  11:45 AEST  +144 min (greyhound, AU)
+Hobart R1  11:45 AEST  +114 min (greyhound, AU)
 -----------------------------------------------
-#   runner              TAB   LADB   NEDS   BDLX   TTCH    UNI   PBET   PALM   SPBT    best
-1   Juneau Quadrant   6.00*   5.50   5.50      -      -      -      -      -      -    6.00
-2   Miss Bern             -  5.00*  5.00*  5.00*      -      -      -      -      -    5.00
-3   Miss Sue Lee          - 12.00* 12.00*      - 12.00*      -      -      -      -   12.00
-4   Listen Spider         -      -      -      -      -  5.00*  5.00*  5.00*      -    5.00
-5   Jamella Storm         -      -      -      -      -  4.40*  4.40*      -  4.40*    4.40
+#   runner              TAB   BRGT   SPBT   PALM   BDLX   LADB    UNI   PBET   NEDS    best
+1   Juneau Quadrant   6.00*  6.00*   5.50      -      -      -      -      -      -    6.00
+2   Miss Bern             -      -  5.00*  5.00*  5.00*      -      -      -      -    5.00
+3   Miss Sue Lee          -      -      -      -      - 12.00* 12.00* 12.00*      -   12.00
+4   Listen Spider         -  5.00*      -      -      -  5.00*  5.00*      -      -    5.00
+5   Jamella Storm         -      -      -  4.40*      -      -      -  4.40*  4.40*    4.40
 
-Angle Park R2  11:55 AEST  +154 min (greyhound, AU)
+Angle Park R2  11:55 AEST  +124 min (greyhound, AU)
 ---------------------------------------------------
-#   runner            SPBT    UNI    TAB   PBET   NEDS    best
-1   Canya Jump       2.40*  2.40*  2.40*      -      -    2.40
-4   Blue Energy          -   3.60  4.00*   3.60      -    4.00
-5   Velaris          3.70*      -  3.70*  3.70*      -    3.70
-7   Adhana Phillip       -      - 26.00* 26.00* 26.00*   26.00
-8   King Fearless    3.70*      -  3.70*      -   3.60    3.70
+#   runner            BRGT    TAB   NEDS   TTCH   BDLX   PALM   PBET    best
+1   Canya Jump       2.40*  2.40*   2.35      -      -      -      -    2.40
+4   Blue Energy      3.90*  3.90*      -   3.80      -      -      -    3.90
+5   Velaris          3.80*   3.70      -      -   3.60      -      -    3.80
+7   Adhana Phillip  31.00*      -      -      -      -  26.00  26.00   31.00
+8   King Fearless    3.80*  3.80*      -      -      -      -   3.70    3.80
 
 3 race(s). Demo responses carry no X-Credits-* headers -- they cost 0.
-
 
 ############################################################################
 # 2. WITH A KEY    --  $ export PE_API_KEY=...  &&  python3 quickstart.py --races 2 --category horse
@@ -45,55 +46,66 @@ Angle Park R2  11:55 AEST  +154 min (greyhound, AU)
 
 mode: KEYED -- live feed, all quoting bookmakers
 
-MORUYA R1  13:25 AEST  +244 min (horse, AU)
--------------------------------------------
-#   runner             NEDS    UNI   PBET   BGLD   TTCH   SPBT   BRGT   BOST    TAB   PALM   LADB   BETR    best
-1   Colorado Sun      3.50*   3.30  3.50*   3.20  3.50*  3.50*  3.50*   3.20   3.40  3.50*  3.50*  3.50*    3.50
-2   Mr Reiby          7.50*   6.00  7.50*   6.50  7.50*  7.50*  7.50*   6.50  7.50*  7.50*  7.50*  7.50*    7.50
-3   Nothing Special   11.00   9.00  11.00  10.00  11.00  11.00  11.00  10.00 12.00*  11.00  11.00  11.00   12.00
-4   Waves Of Wisdom    4.00   3.90   4.00   3.80   4.00  4.20*   3.70   3.80   4.00   4.00   4.00   4.00    4.20
-5   Zippy Lion        5.50*   4.60  5.50*   4.80  5.50*  5.50*  5.50*   4.80  5.50*  5.50*  5.50*  5.50*    5.50
-6   Better Bloom       4.80   4.20   4.80   4.60  5.00*   4.80   4.80   4.60  5.00*   4.80   4.80  5.00*    5.00
-7   Frosted Amour     26.00  21.00  29.00  26.00  26.00  27.00  26.00  26.00 31.00*  26.00  26.00  26.00   31.00
-8   Reveillon          9.50   8.50 10.00*   9.00 10.00* 10.00*   9.50   9.00 10.00*   9.50   9.50 10.00*   10.00
-  oldest price 1809s old | stale: palmerbet
+WELLINGTON R1  13:10 AEST  +199 min (horse, AU)
+-----------------------------------------------
+#   runner                NEDS    TAB   BRGT    UNI   TTCH   BGLD   PLAY   BOST   LADB   SPBT   PBET   PALM   BETR    best
+2   Fearn Trick          5.50*   5.00   5.00   4.60  5.50*   4.60   4.80   4.60  5.50*  5.50*  5.50*   5.00      -    5.50
+4   Hard Choice         26.00* 26.00*  23.00  20.00  23.00  21.00  16.00  21.00 26.00* 26.00* 26.00*  21.00      -   26.00
+5   Chamber Of Secrets   1.45*  1.45*  1.45*   1.40  1.45*   1.35   1.30   1.35  1.45*  1.45*  1.45*  1.45*      -    1.45
+7   Bushwalker            7.00  9.00*   8.50   6.50   8.00   8.00   8.00   8.00   7.00   8.00   8.00   7.00      -    9.00
+8   Argyle Laird        17.00* 17.00*  15.00  14.00 17.00*  16.00  10.00  16.00 17.00* 17.00* 17.00*  15.00      -   17.00
+9   Elderberry Wine     10.00* 10.00*   9.50   8.50 10.00*   9.00   7.00   9.00 10.00* 10.00* 10.00*   9.00      -   10.00
+10  Fortians             46.00 51.00* 51.00*  31.00  41.00  41.00  34.00  41.00  46.00  46.00 51.00*  41.00      -   51.00
+11  Silver Agent        15.00* 15.00*  13.00  12.00  14.00  14.00   9.00  14.00 15.00* 15.00* 15.00*  13.00      -   15.00
+    Spectacular Star         -      -      -      -      -      -      -      -      -      -      -      -  1.45*    1.45
+    Cobocco                  -      -      -      -      -      -      -      -      -      -      -      - 10.00*   10.00
+    Kojak                    -      -      -      -      -      -      -      -      -      -      -      -  5.50*    5.50
+    Baulkham Hills           -      -      -      -      -      -      -      -      -      -      -      - 17.00*   17.00
+    Takethemoneyandrun       -      -      -      -      -      -      -      -      -      -      -      -  8.00*    8.00
+    Denise's Gal             -      -      -      -      -      -      -      -      -      -      -      - 41.00*   41.00
+    Regalade                 -      -      -      -      -      -      -      -      -      -      -      - 23.00*   23.00
+    Grey Belief              -      -      -      -      -      -      -      -      -      -      -      - 14.00*   14.00
+  oldest price 1205s old | 8 runner(s) quoted with no saddlecloth number | scratched: Willingham (1), Street Skater (3), The Glen (6), Box Of Crackers (12), Eclair Coming (13)
 
-BOWEN R1  13:33 AEST  +252 min (horse, AU)
-------------------------------------------
-#   runner           TTCH   LADB    TAB   BGLD   NEDS    UNI   BOST   PALM   BRGT   PBET   SPBT   BETR    best
-1   Touch Base       3.20  3.60*   3.20   3.00  3.60*   3.30   3.00   3.50   3.30   3.40   3.30   3.20    3.60
-3   The House        7.50   7.50   7.00   6.00   7.50   7.50   6.00   7.50  8.00*   7.50   7.50   7.50    8.00
-4   Missile Baby     2.35   2.15   2.40   2.25   2.15   2.30   2.25   2.20  2.45*   2.30   2.30   2.40    2.45
-5   Formal Affair    3.20   3.20   3.10   3.00   3.20   3.20   3.00   3.20   3.20   3.20  3.30*   3.10    3.30
-7   Exo Miss        81.00  81.00  81.00  71.00  81.00  61.00  71.00  71.00101.00*  91.00  91.00  81.00  101.00
-8   Reves Time     16.00*  14.00  15.00  14.00  14.00  15.00  14.00  14.00  15.00  15.00  15.00  14.00   16.00
-  oldest price 626s old | scratched: Octopolis (6), Sailing Solo (2)
+MORUYA R1  13:25 AEST  +214 min (horse, AU)
+-------------------------------------------
+#   runner             SPBT   BRGT    TAB   PLAY   LADB   PALM    UNI   BOST   TTCH   PBET   NEDS   BGLD   BETR   BDLX    best
+1   Colorado Sun      3.60*   3.50   3.50   3.10   3.50   3.40   3.40   3.30  3.60*  3.60*   3.50   3.30   3.50  3.60*    3.60
+2   Mr Reiby          7.50*  7.50*  7.50*   6.00  7.50*   6.00   6.00   6.50  7.50*  7.50*  7.50*   6.50  7.50*  7.50*    7.50
+3   Nothing Special  12.00*  11.00 12.00*   9.00 12.00*   9.50   9.50  10.00 12.00* 12.00* 12.00*  10.00 12.00* 12.00*   12.00
+4   Waves Of Wisdom   4.20*   3.70   4.00   3.40   4.00   3.90   3.90   3.80  4.20*  4.20*   4.00   3.80   4.00  4.20*    4.20
+5   Zippy Lion        5.50*  5.50*  5.50*   4.60  5.50*   4.60   4.60   4.80  5.50*  5.50*  5.50*   4.80  5.50*  5.50*    5.50
+6   Better Bloom      5.00*   4.80  5.00*   4.20  5.00*   4.40   4.40   4.60  5.00*  5.00*  5.00*   4.60  5.00*  5.00*    5.00
+7   Frosted Amour     15.00 26.00*  23.00  19.00  19.00  16.00  16.00  18.00  19.00  19.00  19.00  18.00  19.00  19.00   26.00
+8   Reveillon        10.00*   9.50 10.00*   8.00   9.50   8.50   8.50   9.00 10.00* 10.00*   9.50   9.00 10.00* 10.00*   10.00
+  oldest price 1346s old
 
 2 race(s). X-Credits-Cost: 2  X-Credits-Remaining: unlimited
 ('unlimited' means this key has no monthly cap. A free-tier key reports
  the integer left of its 1,500 credits/month here.)
 
-
 ############################################################################
-# 3. EVERY METHOD  --  $ python3 tour.py     (~18 credits)
+# 3. EVERY METHOD  --  $ python3 tour.py
+#    13 HTTP requests; 25 credits from the ten that return 200, plus up to
+#    15 more if your plan bills the three deliberate 404 probes.
 ############################################################################
 
 ========================================================================
 next_to_go(country='AU')  -- 2 credits
 ========================================================================
-  Angle Park       R1  greyhound  2026-09-15T01:38:00Z  10 books
-  Hobart           R1  greyhound  2026-09-15T01:45:00Z  10 books
-  Angle Park       R2  greyhound  2026-09-15T01:55:00Z  10 books
+  Angle Park       R1  greyhound  2026-09-15T01:38:00Z  11 books
+  Hobart           R1  greyhound  2026-09-15T01:45:00Z  11 books
+  Angle Park       R2  greyhound  2026-09-15T01:55:00Z  11 books
   [cost 2, remaining unlimited]
 
 ========================================================================
 next_to_go(country=None)  -- the filter matters
 ========================================================================
-  CA  Woodbine Mohawk Park R3  2026-09-14T23:22:00Z
-  US  Mountaineer Park     R2  2026-09-14T23:25:00Z
-  US  Louisiana Downs      R6  2026-09-14T23:27:00Z
-  US  Mountaineer Park     R3  2026-09-14T23:50:00Z
+  US  Yonkers Raceway      R4  2026-09-14T23:54:00Z
+  BR  Gavea                R6  2026-09-14T23:55:00Z
+  US  Louisiana Downs      R7  2026-09-14T23:56:00Z
   US  Mountaineer Park     R4  2026-09-15T00:15:00Z
+  CA  Assiniboia Downs     R1  2026-09-15T00:30:00Z
   US  Mountaineer Park     R5  2026-09-15T00:40:00Z
   -> 0 of these 6 races are Australian
   [cost 2, remaining unlimited]
@@ -101,7 +113,7 @@ next_to_go(country=None)  -- the filter matters
 ========================================================================
 events(country='AU')  -- 1 credit, no prices
 ========================================================================
-  13 races in the next 4h
+  21 races in the next 4h
     Angle Park       R1  greyhound  2026-09-15T01:38:00Z
     Hobart           R1  greyhound  2026-09-15T01:45:00Z
     Angle Park       R2  greyhound  2026-09-15T01:55:00Z
@@ -111,8 +123,8 @@ events(country='AU')  -- 1 credit, no prices
 ========================================================================
 venues()  -- 1 credit, the join table
 ========================================================================
-  189 venues: AU=156, NZ=25, GB=3, US=2, BR=1, AR=1, CA=1
-  19 venues emit more than one spelling, e.g.
+  191 venues: AU=156, NZ=25, GB=4, US=3, CA=2, BR=1
+  20 venues emit more than one spelling, e.g.
     ALBION PARK          spellings=['ALBION PARK', 'Albion Park']
     Angle Park           spellings=['ANGLE PARK', 'Angle Park']
     Bowen                spellings=['BOWEN', 'Bowen']
@@ -135,14 +147,14 @@ results(country='AU')  -- 2 credits
 ========================================================================
 best_odds(country='AU')  -- 3 credits
 ========================================================================
-  Angle Park       R1   market 129.6% across 10 books
-     Twitching              2.25   at betdeluxe    (10 books, spread 4.65%)
-     Adhana Remi            3.0    at palmerbet    (10 books, spread 3.45%)
-     Sandy Knuckles         4.8    at tab          (10 books, spread 14.29%)
-  Hobart           R1   market 133.8% across 10 books
-     Jamella Storm          4.4    at pointsbetau  (10 books, spread 4.76%)
-     Miss Bern              5.0    at neds         (10 books, spread 0.0%)
-     Listen Spider          5.0    at sportsbet    (10 books, spread 0.0%)
+  Angle Park       R1   market 128.4% across 11 books
+     Twitching              2.25   at betright     (11 books, spread 4.65%)
+     Adhana Remi            3.0    at betright     (11 books, spread 7.14%)
+     Sandy Knuckles         5.0    at sportsbet    (11 books, spread 13.64%)
+  Hobart           R1   market 133.1% across 11 books
+     Jamella Storm          4.4    at pointsbetau  (11 books, spread 4.76%)
+     Miss Bern              5.0    at betright     (11 books, spread 0.0%)
+     Listen Spider          5.0    at betright     (11 books, spread 0.0%)
   [cost 3, remaining unlimited]
 
 ========================================================================
@@ -202,3 +214,20 @@ guard rails that cost you nothing (no request is sent)
   max_points=10                      -> ValueError: max_points has a minimum of 100 (got 10)
 
 done. final credit state: Credits(cost=None, used=None, remaining=None, limit=None)
+
+############################################################################
+# 4. THE SANDBOX RATE LIMIT  --  $ python3 quickstart.py   (after 30 req/min)
+#    Run immediately after 32 rapid curl calls to the demo endpoint from
+#    this IP. stderr and stdout are merged into this file, which is why the
+#    two stderr lines land above the stdout banner; in a terminal you see
+#    the banner first.
+############################################################################
+
+
+rate limited: Demo rate limit reached (30/min per IP). Get a free API key for higher limits: https://puntersedge.online/api?utm_source=demo_api&utm_medium=ratelimit
+wait a minute and re-run, or skip the queue with a free key: https://puntersedge.online/api?utm_source=australian-racing-api-python&utm_medium=code
+mode: DEMO (no PE_API_KEY set) -- keyless sandbox, 0 credits,
+      3 races / 5 runners / best 3 prices, rate limited to 30 req/min per IP.
+      Free key unlocks the full feed: https://puntersedge.online/api?utm_source=australian-racing-api-python&utm_medium=code
+
+exit status: 2

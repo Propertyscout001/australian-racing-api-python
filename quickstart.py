@@ -3,7 +3,13 @@
 quickstart.py -- print the next Australian races as a runner x bookmaker price grid.
 
     python3 quickstart.py                 # keyless demo data, no registration
-    export PE_API_KEY=...                 # then the real feed, all 14 books
+    export PE_API_KEY=...                 # then the real feed -- every book
+                                          # quoting that race. The count rises
+                                          # as the jump nears: measured
+                                          # 2026-09-14T23:45Z, AU median was 6
+                                          # books >8h out, 11 at 2-4h, and the
+                                          # coverage report's 7-day median
+                                          # across a race's whole life is 14.
     python3 quickstart.py --races 3 --category horse
 
 No dependencies. Python 3.8+.
@@ -109,10 +115,15 @@ def print_race(race: dict) -> None:
                 cells += "%6.2f*" % price
             else:
                 cells += "%7.2f" % price
-        flag = " SCR" if runner.get("number") in scratched else ""
+        num = runner.get("number")
+        # A runner can arrive with number=None. It is rare (1 of 29 AU horse
+        # races at 2026-09-14T23:44Z) and it is always a single book quoting
+        # a field the others do not carry -- the merge keeps the prices but
+        # has no saddlecloth to hang them on. Print a blank, not "None".
+        flag = " SCR" if num is not None and num in scratched else ""
         name = runner.get("name", "")[:name_w]
         print("%-3s %-*s %s %7.2f%s" % (
-            runner.get("number", ""), name_w, name, cells, best, flag))
+            "" if num is None else num, name_w, name, cells, best, flag))
 
     stale = race.get("stale_bookmakers")
     age = race.get("data_age_seconds")
@@ -121,6 +132,10 @@ def print_race(race: dict) -> None:
         notes.append("oldest price %ss old" % age)
     if stale:
         notes.append("stale: %s" % ", ".join(stale))
+    unnumbered = sum(1 for r in (race.get("runners") or [])
+                     if r.get("number") is None and prices_by_book(r))
+    if unnumbered:
+        notes.append("%d runner(s) quoted with no saddlecloth number" % unnumbered)
     vacant = [s for s in (race.get("scratchings") or []) if s.get("vacant")]
     real_scr = [s for s in (race.get("scratchings") or []) if not s.get("vacant")]
     if real_scr:
@@ -158,6 +173,10 @@ def main(argv=None) -> int:
             )
         except RateLimited as exc:
             print("\nrate limited: %s" % exc.detail, file=sys.stderr)
+            # The API's own message links signup with utm_source=demo_api.
+            # Print this repo's link too: the queue is skippable.
+            print("wait a minute and re-run, or skip the queue with a free "
+                  "key: %s" % SIGNUP_URL, file=sys.stderr)
             return 2
         except RacingAPIError as exc:
             # RFC 9457 problem+json: the useful text is .detail

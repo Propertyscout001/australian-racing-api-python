@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
 """
-tour.py -- call every method on RacingAPI once and print a compact real result.
+tour.py -- call every method on RacingAPI and print a compact real result.
 
 Needs PE_API_KEY. Documentation by execution: if this prints, the client works
-against the live API. Total cost is roughly 18 credits (2+1+1+2+3+3+3+3).
+against the live API.
+
+It issues 13 HTTP requests, not 8 -- next_to_go, horse_form and price_history
+are each called more than once, to show gotchas that need two calls to see.
+Counted by instrumenting RacingAPI._get: next-to-go x2, events, venues,
+results, best-odds, movers, price-history x4, horses/form x2.
+
+Billable floor is 25 credits -- next_to_go x2 = 4, events 1, venues 1,
+results 2, best_odds 3, movers 3, price_history 5, horse_form x2 = 6 -- from
+the ten calls that return 200. Three of the four price_history calls are
+deliberate 404 probes and may add up to 15 more, depending on whether your
+plan bills failed calls.
 
     export PE_API_KEY=...
     python3 tour.py
