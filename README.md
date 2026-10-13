@@ -16,6 +16,8 @@ There is **no exchange price in this feed**. The coverage report lists Betfair E
 Pinnacle as explicitly excluded, so if you need exchange liquidity or an overround-free
 reference price, this is not the source for it.
 
+**Want a comparison table you can drop into a page or a spreadsheet?** [`odds_table.py`](#odds-comparison-table-odds_tablepy) is one file that prints every runner against every bookmaker with the best price marked, and writes the same tables as HTML or CSV.
+
 ## Run it without an API key
 
 ```sh
@@ -72,7 +74,7 @@ Angle Park R2  11:55 AEST  +124 min (greyhound, AU)
 ```
 
 `*` marks the top price on that runner among the books quoting it. Missing runner numbers
-(3 and 6 in the first race there) are scratchings.
+(3 and 6 in the first race there) are scratchings, or runners cut by the sandbox's five-runner limit.
 
 ## With a free key
 
@@ -141,6 +143,35 @@ plan bills failed calls. It is documentation by execution: if it prints, the cli
 export PE_API_KEY="your key"
 python3 tour.py
 ```
+
+## Odds comparison table: `odds_table.py`
+
+A standalone script (it does not import `racing_api.py`, so you can copy the one file into your own
+project). For each of the next Australian races it prints every runner against every bookmaker
+quoting the race, marks the best fresh win price, shows stale quotes in brackets, and lists scratchings.
+
+```sh
+export PUNTERSEDGE_API_KEY=your_key      # free key: https://puntersedge.online/api?utm_source=demo&utm_medium=github&utm_campaign=odds-table&utm_content=readme#signup
+python3 odds_table.py                    # next 3 Australian races
+python3 odds_table.py --category horse --races 5
+python3 odds_table.py --venue Caulfield --race 9
+python3 odds_table.py --html odds.html --csv odds.csv
+python3 odds_table.py --sample           # keyless sandbox teaser (3 races, 5 runners, 3 prices), not the full feed
+```
+
+![odds_table.py terminal output: Rosehill R1, Caulfield R1 and Rosehill R2 against 13–14 bookmakers](docs/odds-table-terminal.png)
+
+Real output, captured Wed 14 Oct 2026 08:59 AEDT ([full text](docs/odds-table-output.txt)). The
+`--html` page looks like [this](docs/odds-table-html.png) and carries the "Prices by PuntersEdge"
+credit, because showing prices to other people is the Display licence on the Plus plan
+([terms 8.1](https://puntersedge.online/terms#data-licence)); running it for yourself is personal use on
+any plan. One call per run: `GET /v1/racing/next-to-go`, 2 credits for up to 20 races, so the free
+plan's 3,000 credits a month is about 1,500 runs. The key is read from `PUNTERSEDGE_API_KEY`
+(`PE_API_KEY` also works) and never written anywhere.
+
+Errors are handled rather than dumped: a missing or unverified key (new free keys work only after the
+verification email link is clicked), exhausted credits, plan limits, bad parameters, one retry on a
+429/5xx or a dropped connection, and a venue that isn't on today's card.
 
 ## Using it as a library
 
